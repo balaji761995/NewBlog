@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load octicons %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+<!-- Bootstap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Medium -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+<!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/blogApp.css' %}">
+<!-- font awesome -->
+    <script src="https://kit.fontawesome.com/93fe49e091.js" crossorigin="anonymous"></script>
+<!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <title>Blog Page</title>
+  </head>
+  <body>
+    <nav class='navbar navbar-expand navbar-dark bg-dark techfont flex-md-row bd-navbar'>
+      <div class="container">
+        <div class="collapse navbar-collapse" id='navbarNav'>
+          <ul class='navbar-nav bd-navbar-nav flex-row'>
+            <li class="nav-item active"><a class='nav-link' href="{% url 'post_list' %}">My Blog</a></li>
+            <li class="nav-item active"><a class='nav-link' href="{% url 'about' %}">About</a></li>
+            <li class="nav-item active"><a class='nav-link' href="https://www.github.com">Github</a></li>
+            <li class='nav-item active'><a class='nav-link' href="https://www.linkedin.com">LinkedIn</a></li>
+          </ul>
+          <ul class='navbar-nav flex-row ml-md-auto d-none d-md-flex'>
+            {% if user.is_authenticated %}
+              <li class='nav-item active'><a class='nav-link' href="{% url 'post_new' %}">New Post</a></li>
+              <li class='nav-item active'><a class='nav-link' href="{% url 'draft' %}">Draft Post</a></li>
+              <li class='nav-item active'><a class='nav-link' href="{% url 'logout' %}">Logout</a></li>
+              <span class="navbar-text">Welcome : {{ user.username }}</span>
+            {% else %}
+              <li><a class="nav-item active navbar-right" href="{% url 'login' %}"><i class="fas fa-user" style="color:white"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {# The actual blog posts#}
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="blog_posts">
+                    {% block content %}
+                    {% endblock %}
+
+                  </div>
+
+                </div>
+            </div>
+        </div>
+  </body>
+</html>
